@@ -7,22 +7,22 @@ appVersion: "${appVersion}"
 
 dependencies:
   - name: address-check-application
-    version: 1.1.2
+    version: ~1.1.2
     repository: http://fsmakka.salgar.org/repository/fsm-akka-helm
     condition: address-check.enabled
   - name: credit-score-application
-    version: 1.1.8
+    version: ~1.1.8
     repository: http://fsmakka.salgar.org/repository/fsm-akka-helm
     condition: credit-score.enabled
   - name: fraud-prevention-application
-    version: 1.2.10
+    version: ~1.2.10
     repository: http://fsmakka.salgar.org/repository/fsm-akka-helm
     condition: fraud-prevention.enabled
   - name: customer-relationship-adapter-application
-    version: 1.1.6
+    version: ~1.1.6
     repository: http://fsmakka.salgar.org/repository/fsm-akka-helm
     condition: customer-relation-adapter.enabled
   - name: fsm-akka-4eyes-application
-    version: 1.0.2
+    version: ~1.0.2
     repository: http://fsmakka.salgar.org/repository/fsm-akka-helm
     condition: fsm-akka-4eyes-application.enabled
