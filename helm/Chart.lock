@@ -1,0 +1,18 @@
+dependencies:
+- name: address-check-application
+  repository: http://fsmakka.salgar.org/repository/fsm-akka-helm
+  version: 1.1.2
+- name: credit-score-application
+  repository: http://fsmakka.salgar.org/repository/fsm-akka-helm
+  version: 1.1.8
+- name: fraud-prevention-application
+  repository: http://fsmakka.salgar.org/repository/fsm-akka-helm
+  version: 1.2.10
+- name: customer-relationship-adapter-application
+  repository: http://fsmakka.salgar.org/repository/fsm-akka-helm
+  version: 1.1.6
+- name: fsm-akka-4eyes-application
+  repository: http://fsmakka.salgar.org/repository/fsm-akka-helm
+  version: 1.0.2
+digest: sha256:9f1ee4c09a1cbeee135c4654126a042a1b02a1cdffccc3e824908dd6ab588f59
+generated: "2022-12-21T15:54:06.597407+01:00"
