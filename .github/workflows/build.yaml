@@ -1,6 +1,6 @@
 name: Java / Gradle CI
 run-name: ${{ github.actor }}
-on: [push]
+on: [repository_dispatch]
 jobs:
   calculate-version:
     runs-on: ubuntu-latest
@@ -29,7 +29,7 @@ jobs:
       HELM_PASSWORD: ${{ secrets.HELM_PASSWORD }}
     steps:
       - uses: actions/checkout@v3
-      - name: Display GitVersion ouput
+      - name: Display GitVersion output
         run: |
           echo "SemVer: $SEMVER"
       - name: Set up JDK17
