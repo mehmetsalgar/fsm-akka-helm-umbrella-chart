@@ -1,0 +1,88 @@
+name: Java / Gradle CI
+run-name: ${{ github.actor }}
+on:
+  workflow_dispatch:
+    inputs:
+      source-repo:
+        type: string
+      version-number:
+        type: string
+jobs:
+  calculate-version:
+    runs-on: ubuntu-latest
+    outputs:
+      semVer: ${{ steps.gitversion.outputs.semVer }}
+    steps:
+      - name: Display Branch
+        run: |
+          echo "Branch: ${{ github.ref }}"
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
+          fetch-depth: 0
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.7
+        with:
+          versionSpec: '5.x'
+      - name: Determine Version
+        id: gitversion
+        uses: gittools/actions/gitversion/execute@v0.9.7
+        with:
+          useConfigFile: true
+          configFilePath: GitVersion.yml
+          additionalArguments: '"/b" "${{ github.event.workflow_run.head_branch }}"'
+      - name: Display GitVersion ouput
+        run: |
+          echo "SemVer: $GITVERSION_SEMVER"
+  build:
+    runs-on: ubuntu-latest
+    needs: calculate-version
+    env:
+      SEMVER: ${{ needs.calculate-version.outputs.semVer }}
+      HELM_USER: ${{ secrets.HELM_USER }}
+      HELM_PASSWORD: ${{ secrets.HELM_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
+          fetch-depth: 0
+      - name: Display GitVersion output
+        run: |
+          echo "SemVer: $SEMVER"
+      - name: Set up JDK17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+          cache: gradle
+      - name: Helm Publish
+        run: |
+          echo 'gradle -Pversion=${{ env.SEMVER }} -P"${{ inputs.source-repo }}-version=${{ inputs.version-number }}" Helm Publish'
+  prepare-dev-environment:
+    runs-on: ubuntu-latest
+    needs:
+      - calculate-version
+      - build
+    env:
+      SEMVER: ${{ needs.calculate-version.outputs.semVer }}
+    steps:
+      - name: Create Pull Request Branch for dev-environment
+        uses: aurelien-baudet/workflow-dispatch@v2
+        with:
+          workflow: 'create-branch.yaml'
+          repo: 'mehmetsalgar/fsm-akka-dev-environment'
+          ref: 'development'
+          token: ${{ secrets.PERSONAL_TOKEN }}
+          wait-for-completion: true
+          wait-for-completion-timeout: 5m
+          inputs: '{"branch-name": "address-check"}'
+      - name: Prepare Pull Request Environment
+        uses: aurelien-baudet/workflow-dispatch@v2
+        with:
+          workflow: 'prepare-services-pull-request.yaml'
+          repo: 'mehmetsalgar/fsm-akka-dev-environment'
+          ref: '${{ github.ref }}-address-check'
+          token: ${{ secrets.PERSONAL_TOKEN }}
+          wait-for-completion: true
+          wait-for-completion-timeout: 5m
+          inputs: '{"source-repo": "address-check", "version": "${{ env.SEMVER }}"}'
