@@ -15,7 +15,6 @@ apply plugin: 'org.unbroken-dome.helm'
 apply plugin: 'org.unbroken-dome.helm-publish'
 
 group = 'org.salgar.akka.fsm'
-version = '1.1.2'
 
 ext {
     flag = true
@@ -24,7 +23,12 @@ ext {
 if(ext.flag) {
     ext.props = [
             HELM_USER: property('HELM_USER'),
-            HELM_PASSWORD: property('HELM_PASSWORD')
+            HELM_PASSWORD: property('HELM_PASSWORD'),
+            ADDRESS_CHECK_VERSION: property('address-check-version'),
+            CREDIT_SCORE_VERSION: property('credit-score-version'),
+            FRAUD_PREVENTION_VERSION: property('fraud-prevention-version'),
+            CUSTOMER_RELATIONSHIP_ADAPTER_VERSION: property('customer-relationship-adapter-version'),
+            FSM_AKKA_4EYES_VERSION: property('fsm-akka-4eyes-version')
     ]
 }
 
@@ -37,6 +41,11 @@ helm {
             sourceDir = file('helm')
             filtering {
                 values.put 'appVersion', "${project.version}-${gitBranch()}"
+                values.put 'address-check-version', "${props.ADDRESS_CHECK_VERSION}"
+                values.put 'credit-score-version', "${props.CREDIT_SCORE_VERSION}"
+                values.put 'fraud-prevention-version', "${props.FRAUD_PREVENTION_VERSION}"
+                values.put 'customer-relationship-adapter-version', "${props.CUSTOMER_RELATIONSHIP_ADAPTER_VERSION}"
+                values.put 'fsm-akka-4eyes-version', "${props.FSM_AKKA_4EYES_VERSION}"
             }
         }
     }

@@ -10,6 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
+          ref: ${{ github.event.workflow_run.head_branch }}
           fetch-depth: 0
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.9.7
@@ -41,4 +42,4 @@ jobs:
           cache: gradle
       - name: Helm Publish
         run: |
-          echo 'Helm Publish'
+          echo 'gradle -Pversion="${{ env.SEMVER }}" Helm Publish'
