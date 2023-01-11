@@ -59,7 +59,7 @@ jobs:
           cache: gradle
       - name: Helm Publish
         run: |
-          echo 'gradle -Pversion=${{ env.SEMVER }} -P"${{ inputs.source-repo }}-version=${{ inputs.version-number }}" Helm Publish'
+          echo 'gradle -Pversion=${{ env.SEMVER }} -P${{ inputs.source-repo }}-version=${{ inputs.version-number }} Helm Publish'
   prepare-dev-environment:
     runs-on: ubuntu-latest
     needs:
