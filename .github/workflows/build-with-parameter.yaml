@@ -1,4 +1,4 @@
-name: Java / Gradle CI
+name: Build with Java / Gradle CI and prepare Feature Environment
 run-name: ${{ github.actor }}
 on:
   workflow_dispatch:
