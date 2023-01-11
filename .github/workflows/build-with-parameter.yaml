@@ -3,6 +3,8 @@ run-name: ${{ github.actor }}
 on:
   workflow_dispatch:
     inputs:
+      branch-name:
+        type: string
       source-repo:
         type: string
       version-number:
@@ -18,7 +20,7 @@ jobs:
           echo "Branch: ${{ github.ref }}"
       - uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.workflow_run.head_branch }}
+          ref: ${{ inputs.branch-name }}
           fetch-depth: 0
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.9.7
@@ -30,7 +32,7 @@ jobs:
         with:
           useConfigFile: true
           configFilePath: GitVersion.yml
-          additionalArguments: '"/b" "${{ github.ref }}"'
+          additionalArguments: '"/b" "${{ inputs.branch-name }}"'
       - name: Display GitVersion ouput
         run: |
           echo "SemVer: $GITVERSION_SEMVER"
@@ -44,7 +46,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: ${{ github.ref }}
+          ref: ${{ inputs.branch-name }}
           fetch-depth: 0
       - name: Display GitVersion output
         run: |
@@ -75,13 +77,13 @@ jobs:
           token: ${{ secrets.PERSONAL_TOKEN }}
           wait-for-completion: true
           wait-for-completion-timeout: 5m
-          inputs: '{"branch-name": "${{ github.ref }}"}'
+          inputs: '{"branch-name": "${{ inputs.branch-name }}"}'
       - name: Prepare Pull Request Environment
         uses: aurelien-baudet/workflow-dispatch@v2
         with:
           workflow: 'prepare-services-pull-request.yaml'
           repo: 'mehmetsalgar/fsm-akka-dev-environment'
-          ref: '${{ github.ref }}-address-check'
+          ref: '${{ inputs.branch-name }}-address-check'
           token: ${{ secrets.PERSONAL_TOKEN }}
           wait-for-completion: true
           wait-for-completion-timeout: 5m
