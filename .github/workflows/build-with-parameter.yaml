@@ -30,7 +30,7 @@ jobs:
         with:
           useConfigFile: true
           configFilePath: GitVersion.yml
-          additionalArguments: '"/b" "${{ github.event.workflow_run.head_branch }}"'
+          additionalArguments: '"/b" "${{ github.ref }}"'
       - name: Display GitVersion ouput
         run: |
           echo "SemVer: $GITVERSION_SEMVER"
@@ -44,7 +44,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.workflow_run.head_branch }}
+          ref: ${{ github.ref }}
           fetch-depth: 0
       - name: Display GitVersion output
         run: |
@@ -75,7 +75,7 @@ jobs:
           token: ${{ secrets.PERSONAL_TOKEN }}
           wait-for-completion: true
           wait-for-completion-timeout: 5m
-          inputs: '{"branch-name": "address-check"}'
+          inputs: '{"branch-name": "${{ github.ref }}"}'
       - name: Prepare Pull Request Environment
         uses: aurelien-baudet/workflow-dispatch@v2
         with:
