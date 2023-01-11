@@ -83,7 +83,7 @@ jobs:
         with:
           workflow: 'prepare-services-pull-request.yaml'
           repo: 'mehmetsalgar/fsm-akka-dev-environment'
-          ref: '${{ inputs.branch-name }}-address-check'
+          ref: '${{ inputs.branch-name }}'
           token: ${{ secrets.PERSONAL_TOKEN }}
           wait-for-completion: true
           wait-for-completion-timeout: 5m
