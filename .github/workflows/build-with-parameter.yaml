@@ -86,5 +86,5 @@ jobs:
           ref: '${{ inputs.branch-name }}'
           token: ${{ secrets.PERSONAL_TOKEN }}
           wait-for-completion: true
-          wait-for-completion-timeout: 5m
+          wait-for-completion-timeout: 10m
           inputs: '{"source-repo": "address-check", "version": "${{ env.SEMVER }}"}'
