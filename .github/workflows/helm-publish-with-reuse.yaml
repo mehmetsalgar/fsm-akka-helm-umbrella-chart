@@ -1,0 +1,8 @@
+name: Helm Publish with Gradle
+run-name: ${{ github.actor }}
+on:
+  workflow_dispatch:
+jobs:
+  call-helm-publish:
+    uses: mehmetsalgar/fsm-akka-github-workflows/.github/workflows/helm-publish.yaml@master
+    secrets: inherit
