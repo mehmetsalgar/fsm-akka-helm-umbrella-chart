@@ -4,5 +4,5 @@ on:
   workflow_dispatch:
 jobs:
   call-helm-publish:
-    uses: mehmetsalgar/fsm-akka-github-workflows/.github/workflows/helm/helm-publish.yaml@master
+    uses: mehmetsalgar/fsm-akka-github-workflows/.github/workflows/helm-publish.yaml@master
     secrets: inherit
