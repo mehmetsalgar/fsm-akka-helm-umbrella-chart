@@ -73,7 +73,7 @@ jobs:
           ORG_GRADLE_PROJECT_HELM_PASSWORD: ${{ env.HELM_PASSWORD }}
         with:
           arguments: |
-            version 
+            --version 
             --no-daemon
       - name: Helm Publish
         id: helmPublish
