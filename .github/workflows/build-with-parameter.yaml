@@ -63,9 +63,25 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
           cache: gradle
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+        env:
+          ORG_GRADLE_PROJECT_version: ${{ env.SEMVER }}
+          ORG_GRADLE_PROJECT_HELM_USER: ${{ env.HELM_USER }}
+          ORG_GRADLE_PROJECT_HELM_PASSWORD: ${{ env.HELM_PASSWORD }}
+        with:
+          arguments: |
+            version 
+            --no-daemon
       - name: Helm Publish
+        id: helmPublish
         run: |
           echo 'gradle -Pversion=${{ env.SEMVER }} -P${{ inputs.source-repo }}-version=${{ inputs.version-number }} Helm Publish'
+      - name: Check Failure
+        if: steps.helmPublish.outcome != 'success'
+        run: exit 1
   prepare-dev-environment:
     runs-on: ubuntu-latest
     needs:
@@ -79,7 +95,7 @@ jobs:
         with:
           workflow: 'create-branch.yaml'
           repo: 'mehmetsalgar/fsm-akka-dev-environment'
-          ref: 'development'
+          ref: "${{ inputs.umbrella-chart-base-branch-name }}"
           token: ${{ secrets.PERSONAL_TOKEN }}
           wait-for-completion: true
           wait-for-completion-timeout: 5m
@@ -88,7 +104,7 @@ jobs:
       - name: Prepare Pull Request Environment
         uses: aurelien-baudet/workflow-dispatch@v2
         with:
-          workflow: 'prepare-services-pull-request.yaml'
+          workflow: 'prepare-services-for-new-environment.yaml'
           repo: 'mehmetsalgar/fsm-akka-dev-environment'
           ref: '${{ inputs.branch-name }}'
           token: ${{ secrets.PERSONAL_TOKEN }}
