@@ -4,10 +4,16 @@ on:
   workflow_dispatch:
     inputs:
       branch-name:
+        required: true
+        type: string
+      umbrella-chart-base-branch-name:
+        required: true
         type: string
       source-repo:
+        required: true
         type: string
       version-number:
+        required: true
         type: string
 jobs:
   calculate-version:
