@@ -46,3 +46,4 @@ jobs:
       branch-name: ${{ inputs.branch-name }}
       tag: ${{ needs.calculate-version.outputs.semVer }}
       version: ${{ needs.calculate-version.outputs.semVer }}
+    security: inherit
