@@ -32,7 +32,7 @@ jobs:
           echo "SemVer: $GITVERSION_SEMVER"
   build:
     needs: calculate-version
-    uses: .github/workflows/build-for-integration.yaml@integration/1.2
+    uses: ./.github/workflows/build-for-integration.yaml@integration/1.2
     with:
       source-repo: ${{ inputs.branch-name }}
       umbrella-chart-version: ${{ needs.calculate-version.outputs.semVer }}
@@ -40,7 +40,7 @@ jobs:
   prepare-dev-environment:
     name: Building Integration Environment for Kubernetes
     needs: build
-    uses: .github/workflows/prepare-dev-environment.yaml@integration/1.2
+    uses: ./.github/workflows/prepare-dev-environment.yaml@integration/1.2
     security: inherit
     with:
       branch-name: ${{ inputs.branch-name }}
