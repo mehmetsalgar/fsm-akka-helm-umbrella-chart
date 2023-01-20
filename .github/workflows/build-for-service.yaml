@@ -1,7 +1,7 @@
 name: Build with Java / Gradle CI for Service Helm Publish
 run-name: ${{ github.actor }}
 on:
-  workflow_run:
+  workflow_call:
     inputs:
       source-repo:
         required: true

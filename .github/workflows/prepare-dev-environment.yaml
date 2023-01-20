@@ -1,7 +1,7 @@
 name: Prepare Dev Environments in Kubernetes
 run-name: ${{ github.actor }}
 on:
-  workflow_run:
+  workflow_call:
     inputs:
       branch-name:
         required: true
