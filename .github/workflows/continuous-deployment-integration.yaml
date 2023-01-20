@@ -39,11 +39,10 @@ jobs:
       version-number: ${{ inputs.version-number }}
   prepare-dev-environment:
     name: Building Integration Environment for Kubernetes
-    needs:
-      - build
+    needs: build
     uses: mehmetsalgar/fsm-akka-helm-umbrella-chart/.github/workflows/prepare-dev-environment.yaml@integration/1.2
+    security: inherit
     with:
       branch-name: ${{ inputs.branch-name }}
       tag: ${{ needs.calculate-version.outputs.semVer }}
       version: ${{ needs.calculate-version.outputs.semVer }}
-    security: inherit
