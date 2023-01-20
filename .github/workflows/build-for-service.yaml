@@ -9,7 +9,7 @@ on:
       umbrella-chart-version:
         required: true
         type: string
-      version-number:
+      service-version-number:
         required: true
         type: string
 jobs:
@@ -46,11 +46,11 @@ jobs:
             --version 
             --no-daemon
             -Pversion=${{ inputs.umbrella-chart-version }}
-            -P${{ inputs.source-repo }}-version=${{ inputs.version-number }}
+            -P${{ inputs.source-repo }}-version=${{ inputs.service-version-number }}
       - name: Helm Publish
         id: helmPublish
         run: |
-          echo 'gradle -Pversion=${{ inputs.umbrella-chart-version }} -P${{ inputs.source-repo }}-version=${{ inputs.version-number }} Helm Publish'
+          echo 'gradle -Pversion=${{ inputs.umbrella-chart-version }} -P${{ inputs.source-repo }}-version=${{ inputs.service-version-number }} Helm Publish'
       - name: Check Failure
         if: steps.helmPublish.outcome != 'success'
         run: exit 1

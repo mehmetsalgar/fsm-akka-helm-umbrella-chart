@@ -34,15 +34,13 @@ jobs:
     needs: calculate-version
     uses: ./.github/workflows/build-for-integration.yaml
     with:
-      source-repo: ${{ inputs.branch-name }}
       umbrella-chart-version: ${{ needs.calculate-version.outputs.semVer }}
-      version-number: ${{ inputs.version-number }}
   prepare-dev-environment:
     name: Building Integration Environment for Kubernetes
     needs: build
     uses: ./.github/workflows/prepare-dev-environment.yaml
     with:
-      branch-name: ${{ inputs.branch-name }}
+      branch-name: ${{ github.ref }}
       tag: ${{ needs.calculate-version.outputs.semVer }}
       version: ${{ needs.calculate-version.outputs.semVer }}
     secrets: inherit

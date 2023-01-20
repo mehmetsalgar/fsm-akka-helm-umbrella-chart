@@ -3,13 +3,7 @@ run-name: ${{ github.actor }}
 on:
   workflow_call:
     inputs:
-      source-repo:
-        required: true
-        type: string
       umbrella-chart-version:
-        required: true
-        type: string
-      version-number:
         required: true
         type: string
 jobs:
