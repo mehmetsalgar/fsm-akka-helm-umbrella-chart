@@ -54,7 +54,7 @@ jobs:
     with:
       branch-name: ${{ inputs.branch-name }}-${{ inputs.repo-name }}
       base-branch-name: 'master'
-      value-file: ${{ inputs.value-file }}
+      value-file: 'value-integration'
     secrets: inherit
   create-services-environment-in-k8s:
     name: Create Services Environment in K8s with Branch Name as Namespace
