@@ -1,0 +1,43 @@
+name: Prepare Dev Environments in Kubernetes
+run-name: ${{ github.actor }}
+on:
+  workflow_call:
+    inputs:
+      branch-name:
+        required: true
+        type: string
+      umbrella-chart-base-branch-name:
+        required: true
+        type: string
+      tag:
+        required: true
+        type: string
+      version:
+        required: true
+        type: string
+jobs:
+  prepare-dev-environment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Branch for PullRequest/ServiceRelease/Integration in dev-environment
+        uses: aurelien-baudet/workflow-dispatch@v2
+        with:
+          workflow: 'create-branch.yaml'
+          repo: 'mehmetsalgar/fsm-akka-dev-environment'
+          ref: "${{ inputs.umbrella-chart-base-branch-name }}"
+          token: ${{ secrets.PERSONAL_TOKEN }}
+          wait-for-completion: true
+          wait-for-completion-timeout: 5m
+          wait-for-completion-interval: 10s
+          inputs: '{"branch-name": "${{ inputs.branch-name }}"}'
+      - name: Prepare PullRequest/ServiceRelease/Integration in dev-environment
+        uses: aurelien-baudet/workflow-dispatch@v2
+        with:
+          workflow: 'prepare-services-for-new-environment.yaml'
+          repo: 'mehmetsalgar/fsm-akka-dev-environment'
+          ref: '${{ inputs.branch-name }}'
+          token: ${{ secrets.PERSONAL_TOKEN }}
+          wait-for-completion: true
+          wait-for-completion-timeout: 10m
+          wait-for-completion-interval: 10s
+          inputs: '{"tag": "${{ inputs.tag }}", "version": "${{ inputs.version }}"}'
