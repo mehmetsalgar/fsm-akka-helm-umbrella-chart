@@ -30,7 +30,7 @@ jobs:
           wait-for-completion-timeout: 5m
           wait-for-completion-interval: 10s
           inputs: '{"branch-name": "${{ inputs.branch-name }}"}'
-      - name: Prepare Pull Request Environment
+      - name: Prepare PullRequest/ServiceRelease/Integration in dev-environment
         uses: aurelien-baudet/workflow-dispatch@v2
         with:
           workflow: 'prepare-services-for-new-environment.yaml'
