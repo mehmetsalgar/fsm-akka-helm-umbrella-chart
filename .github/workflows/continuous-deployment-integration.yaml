@@ -52,7 +52,7 @@ jobs:
     needs: prepare-dev-environment
     uses: mehmetsalgar/fsm-akka-github-workflows/.github/workflows/create-infrastructure-in-k8s.yaml@master
     with:
-      branch-name: ${{ github.ref }}
+      branch-name: ${{ github.head.ref }}
       base-branch-name: 'master'
       value-file: 'value-integration'
     secrets: inherit
@@ -61,6 +61,6 @@ jobs:
     needs: create-infrastructure-in-k8s
     uses: mehmetsalgar/fsm-akka-github-workflows/.github/workflows/create-services-environment-in-k8s.yaml@master
     with:
-      branch-name: ${{ github.ref }}
+      branch-name: ${{ github.head.ref }}
       base-branch-name: 'master'
     secrets: inherit
