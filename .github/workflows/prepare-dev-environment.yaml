@@ -6,6 +6,9 @@ on:
       branch-name:
         required: true
         type: string
+      umbrella-chart-base-branch-name:
+        required: true
+        type: string
       tag:
         required: true
         type: string
@@ -16,7 +19,7 @@ jobs:
   prepare-dev-environment:
     runs-on: ubuntu-latest
     steps:
-      - name: Create Pull Request Branch for dev-environment
+      - name: Create Branch for PullRequest/ServiceRelease/Integration in dev-environment
         uses: aurelien-baudet/workflow-dispatch@v2
         with:
           workflow: 'create-branch.yaml'

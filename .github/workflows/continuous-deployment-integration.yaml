@@ -41,6 +41,7 @@ jobs:
     uses: ./.github/workflows/prepare-dev-environment.yaml
     with:
       branch-name: ${{ github.ref }}
+      umbrella-chart-base-branch-name: "master"
       tag: ${{ needs.calculate-version.outputs.semVer }}
       version: ${{ needs.calculate-version.outputs.semVer }}
     secrets: inherit

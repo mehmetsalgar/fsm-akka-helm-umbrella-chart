@@ -58,6 +58,7 @@ jobs:
     uses: mehmetsalgar/fsm-akka-helm-umbrella-chart/.github/workflows/build-for-service.yaml@integration/1.2
     with:
       branch-name: ${{ inputs.branch-name }}
+      umbrella-chart-base-branch-name: ${{ inputs.umbrella-chart-base-branch-name }}
       tag: ${{ inputs.source-repo }}-${{ needs.calculate-version.outputs.semVer }}
       version: ${{ needs.calculate-version.outputs.semVer }}
     security: inherit
