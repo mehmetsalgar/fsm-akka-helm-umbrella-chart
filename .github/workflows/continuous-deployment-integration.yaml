@@ -1,20 +1,8 @@
-name: Build with Java / Gradle CI and prepare for Environment Deployment
+name: Continuous Deployment Integration
 run-name: ${{ github.actor }}
 on:
-  workflow_dispatch:
-    inputs:
-      branch-name:
-        required: true
-        type: string
-      umbrella-chart-base-branch-name:
-        required: true
-        type: string
-      source-repo:
-        required: true
-        type: string
-      version-number:
-        required: true
-        type: string
+  push:
+    branches: [integration/**]
 jobs:
   calculate-version:
     runs-on: ubuntu-latest
@@ -44,22 +32,35 @@ jobs:
           echo "SemVer: $GITVERSION_SEMVER"
   build:
     needs: calculate-version
-    uses: ./.github/workflows/build-for-service.yaml
+    uses: ./.github/workflows/build-for-integration.yaml
     with:
-      source-repo: ${{ inputs.branch-name }}
       umbrella-chart-version: ${{ needs.calculate-version.outputs.semVer }}
-      service-version-number: ${{ inputs.version-number }}
-    security: inherit
   prepare-dev-environment:
-    name: Building Dev Environment for Kubernetes
-    runs-on: ubuntu-latest
+    name: Building Integration Environment for Kubernetes
     needs:
       - build
       - calculate-version
     uses: ./.github/workflows/prepare-dev-environment.yaml
     with:
-      branch-name: ${{ inputs.branch-name }}
-      umbrella-chart-base-branch-name: ${{ inputs.umbrella-chart-base-branch-name }}
-      tag: ${{ inputs.source-repo }}-${{ needs.calculate-version.outputs.semVer }}
+      branch-name: ${{ github.ref }}
+      umbrella-chart-base-branch-name: "master"
+      tag: ${{ needs.calculate-version.outputs.semVer }}
       version: ${{ needs.calculate-version.outputs.semVer }}
-    security: inherit
+    secrets: inherit
+  create-infrastructure-in-k8s:
+    name: Create Infrastructure in K8s with Branch Name as Namespace
+    needs: prepare-dev-environment
+    uses: mehmetsalgar/fsm-akka-github-workflows/.github/workflows/create-infrastructure-in-k8s.yaml@master
+    with:
+      branch-name: ${{ github.ref_name }}
+      base-branch-name: 'master'
+      value-file: 'value-integration'
+    secrets: inherit
+  create-services-environment-in-k8s:
+    name: Create Services Environment in K8s with Branch Name as Namespace
+    needs: create-infrastructure-in-k8s
+    uses: mehmetsalgar/fsm-akka-github-workflows/.github/workflows/create-services-environment-in-k8s.yaml@master
+    with:
+      branch-name: ${{ github.ref_name }}
+      base-branch-name: 'master'
+    secrets: inherit
