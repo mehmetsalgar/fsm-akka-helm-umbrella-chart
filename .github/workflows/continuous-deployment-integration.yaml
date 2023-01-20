@@ -41,8 +41,8 @@ jobs:
     name: Building Integration Environment for Kubernetes
     needs: build
     uses: ./.github/workflows/prepare-dev-environment.yaml
-    security: inherit
     with:
       branch-name: ${{ inputs.branch-name }}
       tag: ${{ needs.calculate-version.outputs.semVer }}
       version: ${{ needs.calculate-version.outputs.semVer }}
+    secrets: inherit
