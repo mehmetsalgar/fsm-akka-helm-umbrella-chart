@@ -40,7 +40,6 @@ jobs:
     security: inherit
   prepare-dev-environment:
     name: Building Integration Environment for Kubernetes
-    runs-on: ubuntu-latest
     needs:
       - build
     uses: mehmetsalgar/fsm-akka-helm-umbrella-chart/.github/workflows/build-for-service.yaml@integration/1.2
