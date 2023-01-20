@@ -1,0 +1,17 @@
+name: Test - Pull Request
+run-name: ${{ github.actor }}
+on:
+  pull_request:
+    types: [opened]
+    branches:
+      - 'development'
+jobs:
+  print-start:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - run: |
+          echo "start"
