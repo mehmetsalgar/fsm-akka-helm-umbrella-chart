@@ -49,7 +49,6 @@ jobs:
     secrets: inherit
   create-infrastructure-in-k8s:
     name: Create Infrastructure in K8s with Branch Name as Namespace
-    runs-on: ubuntu-latest
     needs: prepare-dev-environment
     uses: mehmetsalgar/fsm-akka-github-workflows/.github/workflows/create-infrastructure-in-k8s.yaml@master
     with:
@@ -59,7 +58,6 @@ jobs:
     secrets: inherit
   create-services-environment-in-k8s:
     name: Create Services Environment in K8s with Branch Name as Namespace
-    runs-on: ubuntu-latest
     needs: create-infrastructure-in-k8s
     uses: mehmetsalgar/fsm-akka-github-workflows/.github/workflows/create-services-environment-in-k8s.yaml@master
     with:
