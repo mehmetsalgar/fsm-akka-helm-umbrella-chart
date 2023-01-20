@@ -41,7 +41,7 @@ jobs:
     name: Building Integration Environment for Kubernetes
     needs:
       - build
-    uses: mehmetsalgar/fsm-akka-helm-umbrella-chart/.github/workflows/build-for-service.yaml@integration/1.2
+    uses: mehmetsalgar/fsm-akka-helm-umbrella-chart/.github/workflows/prepare-dev-environment.yaml@integration/1.2
     with:
       branch-name: ${{ inputs.branch-name }}
       tag: ${{ needs.calculate-version.outputs.semVer }}
