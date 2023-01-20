@@ -44,7 +44,7 @@ jobs:
           echo "SemVer: $GITVERSION_SEMVER"
   build:
     needs: calculate-version
-    uses: mehmetsalgar/fsm-akka-helm-umbrella-chart/.github/workflows/build-for-service.yaml@integration/1.2
+    uses: ./.github/workflows/build-for-service.yaml
     with:
       source-repo: ${{ inputs.branch-name }}
       umbrella-chart-version: ${{ needs.calculate-version.outputs.semVer }}
@@ -55,7 +55,8 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - build
-    uses: mehmetsalgar/fsm-akka-helm-umbrella-chart/.github/workflows/build-for-service.yaml@integration/1.2
+      - calculate-version
+    uses: ./.github/workflows/prepare-dev-environment.yaml
     with:
       branch-name: ${{ inputs.branch-name }}
       umbrella-chart-base-branch-name: ${{ inputs.umbrella-chart-base-branch-name }}

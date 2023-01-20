@@ -37,7 +37,9 @@ jobs:
       umbrella-chart-version: ${{ needs.calculate-version.outputs.semVer }}
   prepare-dev-environment:
     name: Building Integration Environment for Kubernetes
-    needs: build
+    needs:
+      - build
+      - calculate-version
     uses: ./.github/workflows/prepare-dev-environment.yaml
     with:
       branch-name: ${{ github.ref }}
