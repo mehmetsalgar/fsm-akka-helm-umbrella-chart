@@ -9,6 +9,9 @@ on:
       tag:
         required: true
         type: string
+      version:
+        required: true
+        type: string
 jobs:
   prepare-dev-environment:
     runs-on: ubuntu-latest
