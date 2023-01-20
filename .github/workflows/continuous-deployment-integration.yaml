@@ -37,7 +37,6 @@ jobs:
       source-repo: ${{ inputs.branch-name }}
       umbrella-chart-version: ${{ needs.calculate-version.outputs.semVer }}
       version-number: ${{ inputs.version-number }}
-    security: inherit
   prepare-dev-environment:
     name: Building Integration Environment for Kubernetes
     needs:
@@ -47,4 +46,3 @@ jobs:
       branch-name: ${{ inputs.branch-name }}
       tag: ${{ needs.calculate-version.outputs.semVer }}
       version: ${{ needs.calculate-version.outputs.semVer }}
-    security: inherit
