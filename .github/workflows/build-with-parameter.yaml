@@ -46,7 +46,7 @@ jobs:
     needs: calculate-version
     uses: ./.github/workflows/build-for-service.yaml
     with:
-      source-repo: ${{ inputs.branch-name }}
+      source-repo: ${{ inputs.source-name }}
       umbrella-chart-version: ${{ needs.calculate-version.outputs.semVer }}
       service-version-number: ${{ inputs.version-number }}
     secrets: inherit
