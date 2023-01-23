@@ -1,5 +1,5 @@
 name: Build with Java / Gradle CI and prepare for Environment Deployment
-run-name: ${{ github.actor }}
+run-name: Building Umbrella Helm Chart to integrate Service Helm Chart triggered via ${{ github.event_name }} by ${{ github.actor }}
 on:
   workflow_dispatch:
     inputs:
