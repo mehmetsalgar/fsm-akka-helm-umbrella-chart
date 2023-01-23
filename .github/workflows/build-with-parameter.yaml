@@ -52,7 +52,6 @@ jobs:
     secrets: inherit
   prepare-dev-environment:
     name: Building Dev Environment for Kubernetes
-    runs-on: ubuntu-latest
     needs:
       - build
       - calculate-version
