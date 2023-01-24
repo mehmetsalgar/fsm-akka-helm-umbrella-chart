@@ -3,6 +3,8 @@ run-name: ${{ github.actor }}
 on:
   push:
     branches: [integration/**]
+    paths-ignore:
+      - '.github/**'
 jobs:
   calculate-version:
     runs-on: ubuntu-latest
