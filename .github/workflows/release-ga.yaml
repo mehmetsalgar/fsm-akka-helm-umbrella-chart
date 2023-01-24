@@ -62,3 +62,12 @@ jobs:
           arguments: |
             --version 
             --no-daemon
+  tag:
+    needs:
+      - calculate-version
+      - release
+    steps:
+      - uses: rickstaa/action-create-tag@v1
+        with:
+          tag: "${{ needs.calculate-version.outputs.semVer }}"
+          message: "Release ${{ needs.calculate-version.outputs.semVer }}"
