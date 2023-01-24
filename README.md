@@ -1,1 +1,1 @@
-Testing Integration 4
+Release 1.3.0
