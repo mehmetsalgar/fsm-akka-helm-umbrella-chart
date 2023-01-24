@@ -63,6 +63,7 @@ jobs:
             --version 
             --no-daemon
   tag:
+    runs-on: ubuntu-latest
     needs:
       - calculate-version
       - release
