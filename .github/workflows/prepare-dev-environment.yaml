@@ -22,14 +22,14 @@ jobs:
       - name: Create Branch for PullRequest/ServiceRelease/Integration in dev-environment
         uses: aurelien-baudet/workflow-dispatch@v2
         with:
-          workflow: 'create-branch.yaml'
+          workflow: 'create-branch-with-reuse.yaml'
           repo: 'mehmetsalgar/fsm-akka-dev-environment'
           ref: "${{ inputs.umbrella-chart-base-branch-name }}"
           token: ${{ secrets.PERSONAL_TOKEN }}
           wait-for-completion: true
           wait-for-completion-timeout: 5m
           wait-for-completion-interval: 10s
-          inputs: '{"branch-name": "${{ inputs.branch-name }}"}'
+          inputs: '{"branch-name": "${{ inputs.branch-name }}", "base-branch-name": "${{ inputs.umbrella-chart-base-branch-name }}"}'
       - name: Prepare PullRequest/ServiceRelease/Integration in dev-environment
         uses: aurelien-baudet/workflow-dispatch@v2
         with:
