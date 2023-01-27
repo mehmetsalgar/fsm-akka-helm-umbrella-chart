@@ -1,5 +1,5 @@
-name: Build with Java / Gradle CI and prepare for Environment Deployment
-run-name: Building Umbrella Helm Chart to integrate Service Helm Chart triggered via ${{ github.event_name }} by ${{ github.actor }}
+name: Publish Helm Umbrella Chart with Gradle and prepare for Environment Deployment
+run-name: Integrate Service Helm Chart to Umbrella Helm Chart / Publish / Prepare Environment triggered via ${{ github.event_name }} by ${{ github.actor }}
 on:
   workflow_dispatch:
     inputs:
@@ -42,9 +42,9 @@ jobs:
       - name: Display GitVersion ouput
         run: |
           echo "SemVer: $GITVERSION_SEMVER"
-  build:
+  helm-publish-umbrella-chart:
     needs: calculate-version
-    uses: ./.github/workflows/build-for-service.yaml
+    uses: ./.github/workflows/helm-publish-for-service.yaml
     with:
       source-repo: ${{ inputs.source-repo }}
       umbrella-chart-version: ${{ needs.calculate-version.outputs.semVer }}
@@ -53,7 +53,7 @@ jobs:
   prepare-dev-environment:
     name: Building Dev Environment for Kubernetes
     needs:
-      - build
+      - helm-publish-umbrella-chart
       - calculate-version
     uses: ./.github/workflows/prepare-dev-environment.yaml
     with:
