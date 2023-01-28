@@ -1,5 +1,5 @@
-name: Build with Java / Gradle CI for Service Helm Publish
-run-name: ${{ github.actor }}
+name: Helm Publish for Services with Gradle CI
+run-name: Helm Publish for Services triggered via ${{ github.event_name }} by ${{ github.actor }}
 on:
   workflow_call:
     inputs:

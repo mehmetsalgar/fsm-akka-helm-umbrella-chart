@@ -1,5 +1,5 @@
 name: Prepare Dev Environments in Kubernetes
-run-name: ${{ github.actor }}
+run-name: Prepare Dev Environments in Kubernetes triggered via ${{ github.event_name }} by ${{ github.actor }}
 on:
   workflow_call:
     inputs:

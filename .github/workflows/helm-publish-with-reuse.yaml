@@ -1,5 +1,5 @@
-name: Helm Publish with Gradle
-run-name: ${{ github.actor }}
+name: Helm Publish with Gradle reuse
+run-name: Helm Publish with Gradle triggered via ${{ github.event_name }} by ${{ github.actor }}
 on:
   workflow_dispatch:
 jobs:
