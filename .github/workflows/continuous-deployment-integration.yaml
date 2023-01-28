@@ -1,5 +1,5 @@
 name: Continuous Deployment Integration
-run-name: ${{ github.actor }}
+run-name: Continuous Deployment Integration triggered via ${{ github.event_name }} by ${{ github.actor }}
 on:
   push:
     branches: [integration/**]
