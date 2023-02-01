@@ -20,5 +20,5 @@ jobs:
     uses: mehmetsalgar/fsm-akka-github-workflows/.github/workflows/cleanup-environment.yaml@master
     needs: [print-start]
     with:
-      branch-name: "${{ github.ref }}"
+      branch-name: "${{ github.event.ref }}"
     secrets: inherit
