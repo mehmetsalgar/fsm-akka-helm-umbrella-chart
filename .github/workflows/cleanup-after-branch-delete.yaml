@@ -1,5 +1,5 @@
 name: Cleanup after Branch Delete
-run-name: Cleanup after Branch Delete triggered via ${{ github.event_name }} by ${{ github.actor }}
+run-name: Cleanup after Branch ${{ github.event.ref }} delete triggered via ${{ github.event_name }} by ${{ github.actor }}
 
 on:
   delete:
