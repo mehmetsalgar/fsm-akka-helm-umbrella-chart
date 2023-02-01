@@ -1,5 +1,5 @@
 name: Helm Publish for Services with Gradle CI
-run-name: Helm Publish for Services triggered via ${{ github.event_name }} by ${{ github.actor }}
+run-name: Helm Publish for Services ${{ inputs.source-repo }} - Version ${{ inputs.service-version-number }} for Chart Version ${{ inputs.umbrella-chart-version }} triggered via ${{ github.event_name }} by ${{ github.actor }}
 on:
   workflow_call:
     inputs:

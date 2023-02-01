@@ -1,5 +1,5 @@
-name: Build with Java / Gradle CI for Integration Helm Publish
-run-name: ${{ github.actor }}
+name: Build with Gradle for Integration Helm Publish
+run-name: Building for Integration Version $ {{ inputs.umbrella-chart-version }}triggered via ${{ github.event_name }} by ${{ github.actor }}
 on:
   workflow_call:
     inputs:
