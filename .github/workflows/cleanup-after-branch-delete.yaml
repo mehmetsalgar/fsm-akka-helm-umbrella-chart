@@ -20,6 +20,5 @@ jobs:
     uses: mehmetsalgar/fsm-akka-github-workflows/.github/workflows/cleanup-environment.yaml@master
     needs: [print-start]
     with:
-      repo-name: "address-check"
       branch-name: "${{ github.ref }}"
     secrets: inherit
