@@ -1,5 +1,5 @@
 name: Prepare Dev Environments in Kubernetes
-run-name: Prepare Dev Environments in Kubernetes triggered via ${{ github.event_name }} by ${{ github.actor }}
+run-name: Prepare Dev Environments in Kubernetes for Branch ${{ inputs.branch-name }} Version ${{ inputs.version }} for Tag ${{ inputs.tag }} with Chart Base Branch ${{ inputs.umbrella-chart-base-branch-name }} triggered via ${{ github.event_name }} by ${{ github.actor }}
 on:
   workflow_call:
     inputs:

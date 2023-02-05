@@ -1,5 +1,5 @@
 name: Create Branch with reuse
-run-name: Creating Branch triggered via ${{ github.event_name }} by ${{ github.actor }}
+run-name: Creating Branch ${{ inputs.branch-name }} - Base Branch Name ${{ inputs.base-branch-name }}triggered via ${{ github.event_name }} by ${{ github.actor }}
 on:
   workflow_dispatch:
     inputs:

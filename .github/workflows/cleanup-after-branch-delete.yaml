@@ -1,11 +1,9 @@
 name: Cleanup after Branch Delete
 run-name: Cleanup after Branch ${{ github.event.ref }} delete triggered via ${{ github.event_name }} by ${{ github.actor }}
-
 on:
   delete:
     branches:
       - integration/**
-      - release/**
 jobs:
   print-start:
     runs-on: ubuntu-latest

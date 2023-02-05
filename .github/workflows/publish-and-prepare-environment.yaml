@@ -1,5 +1,5 @@
 name: Publish Helm Umbrella Chart with Gradle and prepare for Environment Deployment
-run-name: Integrate Service Helm Chart to Umbrella Helm Chart / Publish / Prepare Environment triggered via ${{ github.event_name }} by ${{ github.actor }}
+run-name: Integrate Service ${{ inputs.source-repo }} Helm Chart to Umbrella Helm Chart / Publish / Prepare Environment for Branch ${{ inputs.branch-name }} Version ${{ inputs.version-number }} with Chart Base Branch ${{ inputs.umbrella-chart-base-branch-name }} triggered via ${{ github.event_name }} by ${{ github.actor }}
 on:
   workflow_dispatch:
     inputs:
