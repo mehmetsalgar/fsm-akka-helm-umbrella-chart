@@ -2,21 +2,10 @@ name: Cleanup after Branch Delete
 run-name: Cleanup after Branch ${{ github.event.ref }} delete triggered via ${{ github.event_name }} by ${{ github.actor }}
 on:
   delete:
-    branches:
-      - integration/**
 jobs:
-  print-start:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
-        run: echo "$GITHUB_CONTEXT"
-      - run: |
-          echo "start"
   call-cleanup-workflow:
+    if: ${{ contains(github.event.ref, 'integration/') }}
     uses: mehmetsalgar/fsm-akka-github-workflows/.github/workflows/cleanup-environment.yaml@master
-    needs: [print-start]
     with:
       branch-name: "${{ github.event.ref }}"
     secrets: inherit
