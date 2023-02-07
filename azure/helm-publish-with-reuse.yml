@@ -1,7 +1,7 @@
 name: helm_publish
 
 trigger:
-- azure
+- development
 
 pool:
   vmImage: ubuntu-latest
