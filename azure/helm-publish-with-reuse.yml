@@ -35,7 +35,6 @@ jobs:
       vmImage: ubuntu-latest
     variables:
       version: $[dependencies.CalculateVersion.outputs['calculateVersion.GitVersion.SemVer']]
-      source-repo: ${{ parameters.sourceRepo }}
     steps:
      - task: Gradle@3
        env:
