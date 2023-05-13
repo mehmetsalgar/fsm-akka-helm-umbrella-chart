@@ -75,6 +75,8 @@ helm {
     }*/
 }
 
+tasks.build.dependsOn tasks.helmPackage
+
 def gitBranch() {
     def branch = ""
     def proc = "git rev-parse --abbrev-ref HEAD".execute()
