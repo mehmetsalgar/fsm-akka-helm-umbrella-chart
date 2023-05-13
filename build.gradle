@@ -36,7 +36,7 @@ if(ext.flag) {
 
 helm {
     charts {
-        ac {
+        uc {
             //publish = true
             chartName = 'fsm-akka'
             chartVersion = "${project.version}"
@@ -52,7 +52,7 @@ helm {
         }
     }
     repositories {
-        ac_rep {
+        uc_rep {
             url "${props.HELM_URL}/${props.HELM_PATH}"
             credentials {
                 username = "${props.HELM_USER}"
