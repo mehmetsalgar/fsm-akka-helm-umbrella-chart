@@ -6,12 +6,11 @@ buildscript {
     }
 
     dependencies {
-        classpath "org.unbroken-dome.gradle-plugins.helm:helm-plugin:1.7.0"
-        //classpath "org.unbroken-dome.gradle-plugins.helm:helm-publish-plugin:1.7.0"
+        classpath "io.github.mehmetsalgar.gradle-plugins.helm:helm-plugin:1.0.5"
     }
 }
 
-apply plugin: 'org.unbroken-dome.helm'
+apply plugin: "io.github.mehmetsalgar.helm"
 //apply plugin: 'org.unbroken-dome.helm-publish'
 
 group = 'org.salgar.akka.fsm'
@@ -53,7 +52,7 @@ helm {
     }
     repositories {
         uc_rep {
-            url "${props.HELM_URL}/${props.HELM_PATH}"
+            oci "oci://${props.HELM_URL}${props.HELM_PATH}"
             credentials {
                 username = "${props.HELM_USER}"
                 password = "${props.HELM_PASSWORD}"
