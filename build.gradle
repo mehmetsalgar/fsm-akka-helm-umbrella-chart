@@ -7,12 +7,12 @@ buildscript {
 
     dependencies {
         classpath "org.unbroken-dome.gradle-plugins.helm:helm-plugin:1.7.0"
-        classpath "org.unbroken-dome.gradle-plugins.helm:helm-publish-plugin:1.7.0"
+        //classpath "org.unbroken-dome.gradle-plugins.helm:helm-publish-plugin:1.7.0"
     }
 }
 
 apply plugin: 'org.unbroken-dome.helm'
-apply plugin: 'org.unbroken-dome.helm-publish'
+//apply plugin: 'org.unbroken-dome.helm-publish'
 
 group = 'org.salgar.akka.fsm'
 
@@ -22,6 +22,8 @@ ext {
 
 if(ext.flag) {
     ext.props = [
+            HELM_URL: property('HRLM_URL'),
+            HELM_PATH: property('HRLM_PATH'),
             HELM_USER: property('HELM_USER'),
             HELM_PASSWORD: property('HELM_PASSWORD'),
             ADDRESS_CHECK_VERSION: property('address-check-version'),
@@ -35,30 +37,30 @@ if(ext.flag) {
 helm {
     charts {
         ac {
-            publish = true
+            //publish = true
             chartName = 'fsm-akka'
             chartVersion = "${project.version}"
             sourceDir = file('helm')
             filtering {
                 values.put 'appVersion', "${project.version}-${gitBranch()}"
-                values.put 'addressCheckVersion', "${props.ADDRESS_CHECK_VERSION}"
-                values.put 'creditScoreVersion', "${props.CREDIT_SCORE_VERSION}"
-                values.put 'fraudPreventionVersion', "${props.FRAUD_PREVENTION_VERSION}"
+                //values.put 'addressCheckVersion', "${props.ADDRESS_CHECK_VERSION}"
+                //values.put 'creditScoreVersion', "${props.CREDIT_SCORE_VERSION}"
+                //values.put 'fraudPreventionVersion', "${props.FRAUD_PREVENTION_VERSION}"
                 values.put 'customerRelationshipAdapterVersion', "${props.CUSTOMER_RELATIONSHIP_ADAPTER_VERSION}"
-                values.put 'fsmAkka4eyesVersion', "${props.FSM_AKKA_4EYES_VERSION}"
+                //values.put 'fsmAkka4eyesVersion', "${props.FSM_AKKA_4EYES_VERSION}"
             }
         }
     }
     repositories {
         ac_rep {
-            url 'http://fsmakka.salgar.org/repository/fsm-akka-helm/'
+            url "${props.HELM_URL}/${props.HELM_PATH}"
             credentials {
                 username = "${props.HELM_USER}"
                 password = "${props.HELM_PASSWORD}"
             }
         }
     }
-    publishing {
+    /*publishing {
         repositories {
             nexus {
                 url = uri('http://fsmakka.salgar.org/')
@@ -70,7 +72,7 @@ helm {
                 }
             }
         }
-    }
+    }*/
 }
 
 def gitBranch() {
