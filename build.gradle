@@ -22,8 +22,8 @@ ext {
 
 if(ext.flag) {
     ext.props = [
-            HELM_URL: property('HRLM_URL'),
-            HELM_PATH: property('HRLM_PATH'),
+            HELM_URL: property('HELM_URL'),
+            HELM_PATH: property('HELM_PATH'),
             HELM_USER: property('HELM_USER'),
             HELM_PASSWORD: property('HELM_PASSWORD'),
             ADDRESS_CHECK_VERSION: property('address-check-version'),
