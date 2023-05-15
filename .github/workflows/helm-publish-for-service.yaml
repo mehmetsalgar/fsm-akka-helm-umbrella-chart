@@ -54,9 +54,11 @@ jobs:
       - name: Helm Publish
         id: helmPublish
         shell: bash
+        env:
+          UC_VERSION: ${{ inputs.umbrella-chart-version }}
         run: |
           echo "$HELM_PASSWORD" | helm registry login $HELM_URL -u $HELM_USER --password-stdin
-          helm push build/helm/charts/fsm-akka-helm-umbrella-chart-$SEMVER.tgz oci://$HELM_URL$HELM_PATH
+          helm push build/helm/charts/fsm-akka-helm-umbrella-chart-$UC_VERSION.tgz oci://$HELM_URL$HELM_PATH
       - name: Check Failure
         if: steps.helmPublish.outcome != 'success'
         run: exit 1
