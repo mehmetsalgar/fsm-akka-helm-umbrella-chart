@@ -57,7 +57,7 @@ jobs:
     with:
       branch-name: ${{ github.ref_name }}
       base-branch-name: 'development'
-      value-file: 'value-dev'
+      value-file: 'values-dev'
     secrets: inherit
   create-services-environment-in-k8s:
     name: Create Services Environment in K8s with Branch Name as Namespace
