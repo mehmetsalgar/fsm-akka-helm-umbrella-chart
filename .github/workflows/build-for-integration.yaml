@@ -7,10 +7,12 @@ on:
         required: true
         type: string
 jobs:
-  build:
+  helmPackage:
     name: Building Helm Umbrella Chart for Service
     runs-on: ubuntu-latest
     env:
+      HELM_URL: ${{ secrets.HELM_URL }}
+      HELM_PATH:  ${{ secrets.HELM_PATH }}
       HELM_USER: ${{ secrets.HELM_USER }}
       HELM_PASSWORD: ${{ secrets.HELM_PASSWORD }}
     steps:
@@ -33,17 +35,23 @@ jobs:
         uses: gradle/gradle-build-action@v2
         env:
           ORG_GRADLE_PROJECT_version: ${{ env.SEMVER }}
+          ORG_GRADLE_PROJECT_HELM_URL: ${{ env.HELM_URL }}
+          ORG_GRADLE_PROJECT_HELM_PATH: ${{ env.HELM_PATH }}
           ORG_GRADLE_PROJECT_HELM_USER: ${{ env.HELM_USER }}
           ORG_GRADLE_PROJECT_HELM_PASSWORD: ${{ env.HELM_PASSWORD }}
         with:
           arguments: |
-            --version 
+            helmPackage
             --no-daemon
             -Pversion=${{ inputs.umbrella-chart-version }}
       - name: Helm Publish
         id: helmPublish
+        shell: bash
+        env:
+          UC_VERSION: ${{ inputs.umbrella-chart-version }}
         run: |
-          echo 'gradle -Pversion=${{ inputs.umbrella-chart-version }} Helm Publish'
+          echo "$HELM_PASSWORD" | helm registry login $HELM_URL -u $HELM_USER --password-stdin
+          helm push build/helm/charts/fsm-akka-helm-umbrella-chart-$UC_VERSION.tgz oci://$HELM_URL$HELM_PATH
       - name: Check Failure
         if: steps.helmPublish.outcome != 'success'
         run: exit 1
